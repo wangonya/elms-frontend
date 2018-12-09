@@ -4,7 +4,7 @@
 Simple leave management system.
 
 A user should be able to 
-* [ ] register & login to the system through the first page of the application
+* [x] register & login to the system
 * [ ] see eligibility details (like how many days of leave he/she is eligible for etc)
 * [ ] see leave history
 * [ ] apply for leave, specifying the from and to dates, reason for taking leave, address for communication while on leave, etc. 

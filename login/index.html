@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="#">
     <link rel="icon" type="image/png" href="#">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Register</title>
+    <title>Login</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -78,18 +78,18 @@
             <div class="container-fluid">
                 <div class="col-md-4 ml-auto mr-auto">
                     <div class="card">
-                        <form class="form" method="" action="">
+                        <form class="form" id="login-form">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input type="text" class="form-control" placeholder="john" required>
+                                    <input type="text" class="form-control" placeholder="john" name="uid">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="password" class="form-control" placeholder="*******" required>
+                                    <input type="password" class="form-control" placeholder="*******" name="password">
                                 </div>
                                 <div class="form-group text-center">
-                                    <button class="btn btn-success" type="submit">Login</button>
+                                    <button class="btn btn-success" type="button" onclick="login()">Login</button>
                                 </div>
                             </div>
                         </form>
@@ -112,5 +112,6 @@
 <script src="../assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
 <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
-
+<!--main-->
+<script src="main.js"></script>
 </html>
