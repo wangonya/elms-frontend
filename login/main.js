@@ -1,3 +1,31 @@
+function validate() {
+    const uid = document.getElementById('uid')
+    const password = document.getElementById('password')
+    if (uid.value.length < 4)
+    {
+        $.notify({
+            message: 'Please enter a valid username. Must be more than 4 characters'
+        },{
+            type: 'danger'
+        })
+        uid.focus()
+        return false
+    }
+
+    if (password.value.length < 6)
+    {
+        $.notify({
+            message: 'Please enter a valid password. Must be more than 6 characters'
+        },{
+            type: 'danger'
+        })
+        password.focus()
+        return false
+    }
+
+    login()
+}
+
 function login() {
     const form = new FormData(document.getElementById('login-form'));
     const url = 'http://127.0.0.1:5000/login';
