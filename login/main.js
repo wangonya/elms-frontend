@@ -36,9 +36,14 @@ function login() {
     }).then(response => response.json())
         .then(data => {
             if (data.status === 200) {
-                window.location.replace('/dash')
                 window.localStorage.token = data.token
+                window.localStorage.uid = data.uid
                 window.localStorage.is_admin = data.is_admin
+                if (data.is_admin === true) {
+                    window.location.replace('/dash/admin')
+                } else {
+                    window.location.replace('/dash')
+                }
             } else if(data.status === 401) {
                 console.log('user exists')
                 $.notify({
