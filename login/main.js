@@ -27,30 +27,32 @@ function validate() {
 }
 
 function login() {
-    const form = new FormData(document.getElementById('login-form'));
-    const url = 'http://127.0.0.1:5000/login';
+    const form = new FormData(document.getElementById('login-form'))
+    const url = 'http://127.0.0.1:5000/login'
 
     fetch(url, {
         method: "POST",
         body: form
-    }).then(response => {
-        if (response.status === 200) {
-            console.log('success')
-            window.location.replace("/dash")
-        } else if(response.status === 401) {
-            console.log('wrong credentials')
-            $.notify({
-                message: 'You either entered wrong credentials or that user does not exist. Please check your info and try again'
-            },{
-                type: 'danger'
-            })
-        } else {
-            console.log('something went wrong :(')
-            $.notify({
-                message: 'Something went wrong. Please refresh the page or try again later.'
-            },{
-                type: 'danger'
-            })
-        }
-    })
+    }).then(response => response.json())
+        .then(data => {
+            if (data.status === 200) {
+                window.location.replace('/dash')
+                window.localStorage.token = data.token
+                window.localStorage.is_admin = data.is_admin
+            } else if(data.status === 401) {
+                console.log('user exists')
+                $.notify({
+                    message: 'A user with that username exists. Please choose a different one.'
+                },{
+                    type: 'danger'
+                })
+            } else {
+                console.log('something went wrong :(')
+                $.notify({
+                    message: 'Something went wrong. Please refresh the page or try again later.'
+                },{
+                    type: 'danger'
+                })
+            }
+        })
 }
