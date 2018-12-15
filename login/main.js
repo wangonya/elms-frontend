@@ -45,9 +45,9 @@ function login() {
                     window.location.replace('/dash')
                 }
             } else if(data.status === 401) {
-                console.log('user exists')
+                console.log('invalid credentials')
                 $.notify({
-                    message: 'A user with that username exists. Please choose a different one.'
+                    message: 'Invalid username/password.'
                 },{
                     type: 'danger'
                 })
