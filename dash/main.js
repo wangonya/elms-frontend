@@ -25,7 +25,7 @@ fetch(url, {
                 }
             }
 
-            const table = document.getElementById('table')
+            const table = document.getElementById('user-table')
             const header = table.createTHead()
 
             // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.

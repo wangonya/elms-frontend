@@ -5331,3 +5331,12 @@ License - nucleoapp.com/license/
 }
 
 /* all icon font classes list here */
+
+/* custom */
+#user-table th:nth-child(1) {
+    display: none
+}
+
+#user-table td:nth-child(1) {
+    display: none
+}
