@@ -77,207 +77,80 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="card ">
-                            <div class="card-header ">
-                                <h4 class="card-title">Email Statistics</h4>
-                                <p class="card-category">Last Campaign Performance</p>
-                            </div>
-                            <div class="card-body ">
-                                <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
-                            </div>
-                            <div class="card-footer ">
-                                <div class="legend">
-                                    <i class="fa fa-circle text-info"></i> Open
-                                    <i class="fa fa-circle text-danger"></i> Bounce
-                                    <i class="fa fa-circle text-warning"></i> Unsubscribe
-                                </div>
-                                <hr>
-                                <div class="stats">
-                                    <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-8">
-                        <div class="card ">
+                        <div class="card strpied-tabled-with-hover">
                             <div class="card-header ">
-                                <h4 class="card-title">Users Behavior</h4>
-                                <p class="card-category">24 Hours performance</p>
+                                <h4 class="card-title">Your Leave History</h4>
+                                <p class="card-category">Here is a subtitle for this table</p>
                             </div>
-                            <div class="card-body ">
-                                <div id="chartHours" class="ct-chart"></div>
+                            <div class="card-body table-full-width table-responsive">
+                                <table class="table table-hover table-striped" id="user-table">
+                                </table>
                             </div>
-                            <div class="card-footer ">
-                                <div class="legend">
-                                    <i class="fa fa-circle text-info"></i> Open
-                                    <i class="fa fa-circle text-danger"></i> Click
-                                    <i class="fa fa-circle text-warning"></i> Click Second Time
-                                </div>
-                                <hr>
-                                <div class="stats">
-                                    <i class="fa fa-history"></i> Updated 3 minutes ago
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-user">
+                            <div class="card-image">
+                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
+                            </div>
+                            <div class="card-body">
+                                <div class="author">
+                                    <a href="#">
+                                        <img class="avatar border-gray" src="../assets/img/default-avatar.png" alt="...">
+                                        <h5 class="title" id="uid"></h5>
+                                    </a>
+                                    <p><span class="badge-info badge badge-pill">Remaining leave days: 21</span></p>
+                                    <!-- Button trigger modal -->
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#applyLeave">
+                                        Apply Leave
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card ">
-                            <div class="card-header ">
-                                <h4 class="card-title">2017 Sales</h4>
-                                <p class="card-category">All products including Taxes</p>
-                            </div>
-                            <div class="card-body ">
-                                <div id="chartActivity" class="ct-chart"></div>
-                            </div>
-                            <div class="card-footer ">
-                                <div class="legend">
-                                    <i class="fa fa-circle text-info"></i> Tesla Model S
-                                    <i class="fa fa-circle text-danger"></i> BMW 5 Series
+                    <!-- Apply Leave Modal -->
+                    <div class="modal fade" id="applyLeave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Leave Application Form</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                <hr>
-                                <div class="stats">
-                                    <i class="fa fa-check"></i> Data information certified
+                                <div class="modal-body">
+                                    <form class="form" id="apply-form">
+                                        <input type="hidden" id="u_id" name="uid" value="">
+                                        <input type="hidden" id="l_status" name="l_status" value='pending approval'>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="l_from">From</label>
+                                                    <input type="date" class="form-control" name="l_from" id="l_from">                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="l_to">To</label>
+                                                    <input type="date" class="form-control" name="l_to" id="l_to">                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="l_type">Leave Type</label>
+                                                <select id="l_type" name="l_type" class="form-control">
+                                                    <option selected value="sick">Sick Leave</option>
+                                                    <option value="(m/p)aternity">Maternity/Paternity</option>
+                                                    <option value="absence">Leave of Absence</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="l_details">Details</label>
+                                                <textarea name="l_details" id="l_details" placeholder="Reason for leave..."
+                                                          class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card  card-tasks">
-                            <div class="card-header ">
-                                <h4 class="card-title">Tasks</h4>
-                                <p class="card-category">Backend development</p>
-                            </div>
-                            <div class="card-body ">
-                                <div class="table-full-width">
-                                    <table class="table">
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" checked>
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" checked>
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                            </td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" checked>
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Read "Following makes Medium better"</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" disabled>
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Unfollow 5 enemies from twitter</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="card-footer ">
-                                <hr>
-                                <div class="stats">
-                                    <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-success" type="button" onclick="validate()">Apply</button>                                </div>
                             </div>
                         </div>
                     </div>
@@ -299,5 +172,6 @@
 <script src="../assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
 <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
-
+<!--main-->
+<script src="main.js"></script>
 </html>
