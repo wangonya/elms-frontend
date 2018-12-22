@@ -28,7 +28,7 @@ function validate() {
 
 function login() {
     const form = new FormData(document.getElementById('login-form'))
-    const url = 'http://127.0.0.1:5000/login'
+    const url = 'https://elmsystem.herokuapp.com/login'
 
     fetch(url, {
         method: "POST",

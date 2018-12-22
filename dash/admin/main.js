@@ -1,6 +1,6 @@
 document.getElementById('uid').innerHTML = localStorage.uid
 
-const url = `http://127.0.0.1:5000/leaves`
+const url = `https://elmsystem.herokuapp.com/leaves`
 
 // TODO: CHECK IF ADMIN FROM TOKEN. THIS IS INSECURE!!
 if(localStorage.is_admin === 'true') {

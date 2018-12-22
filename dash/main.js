@@ -1,7 +1,7 @@
 document.getElementById('uid').innerHTML = localStorage.uid
 document.getElementById('u_id').value = localStorage.uid
 
-const url = `http://127.0.0.1:5000/leaves/${localStorage.uid}`
+const url = `https://elmsystem.herokuapp.com/leaves/${localStorage.uid}`
 
 if(localStorage.uid !== undefined) {
     function getLeaves() {
@@ -111,7 +111,7 @@ function validate() {
 
 function apply() {
     const form = new FormData(document.getElementById('apply-form'))
-    const url = 'http://127.0.0.1:5000/leaves'
+    const url = 'https://elmsystem.herokuapp.com/leaves'
 
     fetch(url, {
         method: "POST",
