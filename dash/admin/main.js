@@ -1,5 +1,3 @@
-document.getElementById('uid').innerHTML = localStorage.uid
-
 const url = `https://elmsystem.herokuapp.com/leaves`
 
 // TODO: CHECK IF ADMIN FROM TOKEN. THIS IS INSECURE!!
