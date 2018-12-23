@@ -5333,10 +5333,10 @@ License - nucleoapp.com/license/
 /* all icon font classes list here */
 
 /* custom */
-#user-table th:nth-child(1) {
+#user-table th:nth-child(2) {
     display: none
 }
 
-#user-table td:nth-child(1) {
+#user-table td:nth-child(2) {
     display: none
 }
