@@ -44,6 +44,11 @@ if(localStorage.is_admin === 'true') {
                         for (let j = 0; j < col.length; j++) {
                             let tabCell = tr.insertCell(-1);
                             tabCell.innerHTML = data[i][col[j]];
+                            // search tables and add class to leave status
+                            $("td:nth-child(8):contains('approved')").addClass("text-success")
+                            $("td:nth-child(8):contains('denied')").addClass("text-warning")
+                            $("td:nth-child(8):contains('cancelled')").addClass("text-danger")
+                            $("td:nth-child(8):contains('pending')").addClass("text-info")
                         }
 
                         // get row data on click
