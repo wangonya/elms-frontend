@@ -90,6 +90,42 @@
                         </div>
                     </div>
                 </div>
+                <!-- Respond to Leave Modal -->
+                <div class="modal fade" id="respondLeave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Leave Application Form</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form" id="respond-form">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="l_status">Action</label>
+                                            <select id="l_status" name="l_status" class="form-control">
+                                                <option value="approved">Approve leave</option>
+                                                <option value="denied">Deny leave</option>
+                                                <option value="cancelled">Confirm cancel</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="admin_remarks">Remarks</label>
+                                            <textarea name="admin_remarks" id="admin_remarks" placeholder="Admin remarks..."
+                                                      class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button class="btn btn-info" type="button" onclick="validate()">Submit Response</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Mini Modal -->
                 <div class="modal fade modal-mini modal-primary" id="loaderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">

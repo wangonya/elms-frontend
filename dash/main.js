@@ -47,6 +47,33 @@ if(localStorage.uid !== undefined) {
                             let tabCell = tr.insertCell(-1);
                             tabCell.innerHTML = data[i][col[j]];
                         }
+
+                        // get row data on click
+                        tr.onclick = function () {
+                            $('#editLeave').modal('show')
+                            localStorage.lid = $(this).children().closest("td:nth-child(1)").html()
+                            const editStatus = $(this).children().closest("td:nth-child(8)").html()
+                            document.getElementById('editStatus').innerHTML = editStatus
+
+                            if(editStatus === 'pending') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-watch-time"></i>'
+                                document.getElementById('editButton').innerHTML = '<button class="btn btn-info" type="button" onclick="withdrawLeave()">Withdraw Application</button>'
+                            } else if (editStatus === 'cancelled') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-simple-remove"></i>'
+                            } else if (editStatus === 'denied') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-simple-remove"></i>'
+                            } else if (editStatus === 'withdrawn') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-refresh-02"></i>'
+                            } else if (editStatus === 'approved') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-check-2"></i>'
+                                document.getElementById('editButton').innerHTML = '<button class="btn btn-danger" type="button" onclick="cancelLeave()">Cancel Leave</button>'
+                            }
+                        }
                     }
                 }
             })
@@ -121,7 +148,7 @@ function apply() {
         })
     }).then(response => response.json())
         .then(data => {
-            if (data.message.includes('pending approval')) {
+            if (data.message.includes('pending')) {
                 $.notify({
                     message: data.message
                 },{
@@ -136,6 +163,14 @@ function apply() {
                     type: 'danger'
                 })
                 $('#applyLeave').modal('hide')
+            } else if(data.message.includes('An error occurred while inserting the data.')) {
+                console.log(data)
+                $.notify({
+                    message: 'An error occurred while inserting the data. Please contact the admin.'
+                },{
+                    type: 'danger'
+                })
+                $('#applyLeave').modal('hide')
             } else {
                 console.log(data)
                 $.notify({
@@ -143,8 +178,49 @@ function apply() {
                 },{
                     type: 'success'
                 })
+                document.getElementById('user-table').innerHTML = ''
                 getLeaves()
                 $('#applyLeave').modal('hide')
             }
+        })
+}
+
+const withdrawUrl = `https://elmsystem.herokuapp.com/leaves/${localStorage.lid}/withdraw`
+const cancelUrl = `https://elmsystem.herokuapp.com/leaves/${localStorage.lid}/cancel`
+
+function withdrawLeave() {
+    fetch(withdrawUrl, {
+        method: "PATCH",
+        headers: new Headers({
+            'Authorization': 'Bearer '+localStorage.token
+        })
+    }).then(response => response.json())
+        .then(data => {
+            $.notify({
+                message: 'Leave status updated'
+            },{
+                type: 'success'
+            })
+            document.getElementById('user-table').innerHTML = ''
+            getLeaves()
+        })
+}
+
+function cancelLeave() {
+    fetch(cancelUrl, {
+        method: "PATCH",
+        headers: new Headers({
+            'Authorization': 'Bearer '+localStorage.token
+        })
+    }).then(response => response.json())
+        .then(data => {
+            $.notify({
+                message: 'Leave status updated'
+            },{
+                type: 'success'
+            })
+            document.getElementById('user-table').innerHTML = ''
+            $('#editLeave').modal('hide')
+            getLeaves()
         })
 }
