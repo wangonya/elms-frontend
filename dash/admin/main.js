@@ -49,6 +49,7 @@ if(localStorage.is_admin === 'true') {
                             $("td:nth-child(8):contains('denied')").addClass("text-warning")
                             $("td:nth-child(8):contains('cancelled')").addClass("text-danger")
                             $("td:nth-child(8):contains('pending')").addClass("text-info")
+                            $("td:nth-child(8):contains('withdrawn')").addClass("text-muted")
                         }
 
                         // get row data on click

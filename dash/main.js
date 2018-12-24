@@ -51,6 +51,7 @@ if(localStorage.uid !== undefined) {
                             $("td:nth-child(8):contains('denied')").addClass("text-warning")
                             $("td:nth-child(8):contains('cancelled')").addClass("text-danger")
                             $("td:nth-child(8):contains('pending')").addClass("text-info")
+                            $("td:nth-child(8):contains('withdrawn')").addClass("text-muted")
                         }
 
                         // get row data on click
@@ -207,6 +208,7 @@ function withdrawLeave() {
                 type: 'success'
             })
             document.getElementById('user-table').innerHTML = ''
+            $('#editLeave').modal('hide')
             getLeaves()
         })
 }
