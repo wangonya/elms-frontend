@@ -1,54 +1,85 @@
 document.getElementById('uid').innerHTML = localStorage.uid
 document.getElementById('u_id').value = localStorage.uid
 
-const url = `http://127.0.0.1:5000/leaves/${localStorage.uid}`
+const url = `https://elmsystem.herokuapp.com/leaves/${localStorage.uid}`
 
-function getLeaves() {
-    fetch(url, {
-        headers: new Headers({
-            'Authorization': 'Bearer '+localStorage.token
-        })
-    }).then(response => response.json())
-        .then(data => {
-            if(data.msg === 'Token has expired') {
-                $.notify({
-                    message: 'Your token has expired. Please login again'
-                },{
-                    type: 'danger'
-                })
-            } else {
-                const col = [];
-                for (let i = 0; i < data.length; i++) {
-                    for (let key in data[i]) {
-                        if (col.indexOf(key) === -1) {
-                            col.push(key);
+if(localStorage.uid !== undefined) {
+    function getLeaves() {
+        fetch(url, {
+            headers: new Headers({
+                'Authorization': 'Bearer '+localStorage.token
+            })
+        }).then(response => response.json())
+            .then(data => {
+                if(data.msg === 'Token has expired') {
+                    $.notify({
+                        message: 'Your token has expired. Please login again'
+                    },{
+                        type: 'danger'
+                    })
+                } else {
+                    const col = [];
+                    for (let i = 0; i < data.length; i++) {
+                        for (let key in data[i]) {
+                            if (col.indexOf(key) === -1) {
+                                col.push(key);
+                            }
+                        }
+                    }
+
+                    const table = document.getElementById('user-table')
+                    const header = table.createTHead()
+
+                    // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+                    const thr = header.insertRow(-1);
+                    for (let i = 0; i < col.length; i++) {
+                        let th = document.createElement("th");
+                        th.innerHTML = col[i];
+                        thr.appendChild(th);
+                    }
+
+                    // ADD JSON DATA TO THE TABLE AS ROWS.
+                    for (let i = 0; i < data.length; i++) {
+
+                        const tr = table.insertRow(-1);
+
+                        for (let j = 0; j < col.length; j++) {
+                            let tabCell = tr.insertCell(-1);
+                            tabCell.innerHTML = data[i][col[j]];
+                        }
+
+                        // get row data on click
+                        tr.onclick = function () {
+                            $('#editLeave').modal('show')
+                            localStorage.lid = $(this).children().closest("td:nth-child(1)").html()
+                            const editStatus = $(this).children().closest("td:nth-child(8)").html()
+                            document.getElementById('editStatus').innerHTML = editStatus
+
+                            if(editStatus === 'pending') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-watch-time"></i>'
+                                document.getElementById('editButton').innerHTML = '<button class="btn btn-info" type="button" onclick="withdrawLeave()">Withdraw Application</button>'
+                            } else if (editStatus === 'cancelled') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-simple-remove"></i>'
+                            } else if (editStatus === 'denied') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-simple-remove"></i>'
+                            } else if (editStatus === 'withdrawn') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-refresh-02"></i>'
+                            } else if (editStatus === 'approved') {
+                                document.getElementById('editButton').innerHTML = ''
+                                document.getElementById('editIcon').innerHTML = '<i class="nc-icon nc-check-2"></i>'
+                                document.getElementById('editButton').innerHTML = '<button class="btn btn-danger" type="button" onclick="cancelLeave()">Cancel Leave</button>'
+                            }
                         }
                     }
                 }
-
-                const table = document.getElementById('user-table')
-                const header = table.createTHead()
-
-                // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-                const thr = header.insertRow(-1);
-                for (let i = 0; i < col.length; i++) {
-                    let th = document.createElement("th");
-                    th.innerHTML = col[i];
-                    thr.appendChild(th);
-                }
-
-                // ADD JSON DATA TO THE TABLE AS ROWS.
-                for (let i = 0; i < data.length; i++) {
-
-                    const tr = table.insertRow(-1);
-
-                    for (let j = 0; j < col.length; j++) {
-                        let tabCell = tr.insertCell(-1);
-                        tabCell.innerHTML = data[i][col[j]];
-                    }
-                }
-            }
-        })
+            })
+    }
+} else {
+    window.location.replace('/login')
 }
 
 getLeaves()
@@ -107,7 +138,7 @@ function validate() {
 
 function apply() {
     const form = new FormData(document.getElementById('apply-form'))
-    const url = 'http://127.0.0.1:5000/leaves'
+    const url = 'https://elmsystem.herokuapp.com/leaves'
 
     fetch(url, {
         method: "POST",
@@ -117,7 +148,7 @@ function apply() {
         })
     }).then(response => response.json())
         .then(data => {
-            if (data.message.includes('pending approval')) {
+            if (data.message.includes('pending')) {
                 $.notify({
                     message: data.message
                 },{
@@ -132,6 +163,14 @@ function apply() {
                     type: 'danger'
                 })
                 $('#applyLeave').modal('hide')
+            } else if(data.message.includes('An error occurred while inserting the data.')) {
+                console.log(data)
+                $.notify({
+                    message: 'An error occurred while inserting the data. Please contact the admin.'
+                },{
+                    type: 'danger'
+                })
+                $('#applyLeave').modal('hide')
             } else {
                 console.log(data)
                 $.notify({
@@ -139,8 +178,49 @@ function apply() {
                 },{
                     type: 'success'
                 })
+                document.getElementById('user-table').innerHTML = ''
                 getLeaves()
                 $('#applyLeave').modal('hide')
             }
+        })
+}
+
+const withdrawUrl = `https://elmsystem.herokuapp.com/leaves/${localStorage.lid}/withdraw`
+const cancelUrl = `https://elmsystem.herokuapp.com/leaves/${localStorage.lid}/cancel`
+
+function withdrawLeave() {
+    fetch(withdrawUrl, {
+        method: "PATCH",
+        headers: new Headers({
+            'Authorization': 'Bearer '+localStorage.token
+        })
+    }).then(response => response.json())
+        .then(data => {
+            $.notify({
+                message: 'Leave status updated'
+            },{
+                type: 'success'
+            })
+            document.getElementById('user-table').innerHTML = ''
+            getLeaves()
+        })
+}
+
+function cancelLeave() {
+    fetch(cancelUrl, {
+        method: "PATCH",
+        headers: new Headers({
+            'Authorization': 'Bearer '+localStorage.token
+        })
+    }).then(response => response.json())
+        .then(data => {
+            $.notify({
+                message: 'Leave status updated'
+            },{
+                type: 'success'
+            })
+            document.getElementById('user-table').innerHTML = ''
+            $('#editLeave').modal('hide')
+            getLeaves()
         })
 }
